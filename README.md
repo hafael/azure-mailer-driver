@@ -1,4 +1,4 @@
-# Azure Email Communication Service (ECS) for Laravel.
+# Azure Email Communication Service (ECS) for Laravel
 
 This package is an Microsoft Azure Email Communication Service (ECS) Swift Mailer Driver for Laravel.
 
