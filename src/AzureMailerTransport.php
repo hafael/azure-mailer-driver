@@ -7,6 +7,7 @@ use GuzzleHttp\ClientInterface;
 use Illuminate\Mail\Transport\Transport;
 use Swift_Mime_SimpleMessage;
 use Swift_Attachment;
+use Illuminate\Support\Str;
 
 class AzureMailerTransport extends Transport
 {
@@ -199,11 +200,13 @@ class AzureMailerTransport extends Transport
 
         // Add our final signature in Base64 to the authorization header of the request.
         $headers['Authorization'] = "HMAC-SHA256 SignedHeaders=date;host;x-ms-content-sha256&Signature=" . $signature;
+
+        $messageId = str_replace('@swift.generated', '', $message->getId());
         
         return array_merge($headers, [
             'Content-Type'             => 'application/json',
             'x-ms-date'                => $headers['Date'],
-            'repeatability-request-id' => str_replace('@swift.generated', '', $message->getId()),
+            'repeatability-request-id' => !empty($messageId) && Str::isUuid($messageId) ? $messageId : (string) Str::uuid(),
             'repeatability-first-sent' => $headers['Date'],
             'Host'                     => $hostStr,
         ]);
