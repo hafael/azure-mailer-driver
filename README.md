@@ -1,6 +1,8 @@
-# Azure Email Communication Service (ECS) for Laravel
+# Microsoft Azure (ACS) Bridge
 
-This package is an Microsoft Azure Email Communication Service (ECS) Swift Mailer Driver for Laravel.
+Provides Azure Communication Service integration for Symfony Mailer.
+
+✅ Including Laravel Service Provider boot script! (L9+)
 
 [![Latest Stable Version](http://poser.pugx.org/hafael/azure-mailer-driver/v)](https://packagist.org/packages/hafael/azure-mailer-driver)
 [![Latest Unstable Version](http://poser.pugx.org/hafael/azure-mailer-driver/v/unstable)](https://packagist.org/packages/hafael/azure-mailer-driver)
@@ -12,7 +14,8 @@ This library provides developers with a simple set of features for sending Larav
 
 ## 💡 Requirements
 
-PHP 7.3 or higher
+- PHP 8.1 or higher
+- [symfony/http-client](https://github.com/symfony/http-client)
 
 
 ## 🧩 Available resources
@@ -35,7 +38,7 @@ First time using Azure ECS? Create your [Azure account](https://azure.com), if y
 1. Download [Composer](https://getcomposer.org/doc/00-intro.md) if not already installed
 
 2. On your project directory run on the command line
-`composer require "hafael/azure-mailer-driver"`
+`composer require hafael/azure-mailer-driver symfony/http-client`
 
 3. Get your Azure CS Access Key and Service Endpoint.
 
@@ -56,7 +59,7 @@ Add entry to [root-of-laravel]/config/mail.php:
             'transport'             => 'azure',
             'endpoint'              => env('AZURE_MAIL_ENDPOINT', 'https://{communicatonServiceName}.communication.azure.com'),
             'access_key'            => env('AZURE_MAIL_KEY'),
-            'api_version'           => env('AZURE_MAIL_API_VERSION', '2021-10-01-preview'), //optional
+            'api_version'           => env('AZURE_MAIL_API_VERSION', '2023-03-31'), //optional
             'disable_user_tracking' => env('AZURE_MAIL_DISABLE_TRACKING', false), //optional
         ],
     ]
@@ -86,6 +89,8 @@ and just sent your notification mail messages!
 
 
 ## 📚 Documentation 
+
+Build powerful, cloud-based communication and customer engagement experiences by adding voice, video, chat, sms, email, teams interoperability, call automation, and telephony to your apps.
 
 Visit our Dev Site for further information regarding:
  - Azure Communication Service Docs: [English](https://learn.microsoft.com/en-us/azure/communication-services/)
