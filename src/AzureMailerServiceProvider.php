@@ -30,10 +30,10 @@ class AzureMailerServiceProvider extends MailServiceProvider
             return (new AzureMailerTransportFactory)->create(
                 new Dsn(
                     'azure+api',
-                    config('services.azure.endpoint'),
-                    config('services.azure.access_key'),
-                    config('services.azure.api_version'),
-                    config('services.azure.disable_user_tracking')
+                    config('mail.mailers.azure.endpoint'),
+                    config('mail.mailers.azure.access_key'),
+                    config('mail.mailers.azure.api_version'),
+                    config('mail.mailers.azure.disable_user_tracking')
                 )
             );
         });

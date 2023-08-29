@@ -59,8 +59,8 @@ Add entry to [root-of-laravel]/config/mail.php:
             'transport'             => 'azure',
             'endpoint'              => env('AZURE_MAIL_ENDPOINT', 'https://{communicatonServiceName}.communication.azure.com'),
             'access_key'            => env('AZURE_MAIL_KEY'),
-            'api_version'           => env('AZURE_MAIL_API_VERSION', '2023-03-31'), //optional
-            'disable_user_tracking' => env('AZURE_MAIL_DISABLE_TRACKING', false), //optional
+            'api_version'           => env('AZURE_MAIL_API_VERSION', '2023-03-31'),
+            'disable_user_tracking' => env('AZURE_MAIL_DISABLE_TRACKING', false),
         ],
     ]
 
@@ -79,8 +79,8 @@ Add entry to [root-of-laravel]/.env:
   # Azure Service entries
   AZURE_MAIL_ENDPOINT="https://{communicatonServiceName}.communication.azure.com"
   AZURE_MAIL_KEY="{base64accessToken}"
-  AZURE_MAIL_API_VERSION="2021-10-01-preview" #optional
-  AZURE_MAIL_DISABLE_TRACKING=false #optional
+  # AZURE_MAIL_API_VERSION=2023-03-31 #optional
+  # AZURE_MAIL_DISABLE_TRACKING=false #optional
   
 ```
 

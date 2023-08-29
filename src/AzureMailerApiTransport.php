@@ -322,12 +322,14 @@ class AzureMailerApiTransport extends AbstractApiTransport
         $signature = $this->getAuthenticationSignature($stringToSign);
         
         //get GUID part of message id to identify the long running operation
-        $messageId = explode('@', $message->generateMessageId(), 2)[0];
+        //$messageId = explode('@', $message->generateMessageId(), 2)[0];
+
+        $messageId = $this->generateMessageId();
 
         $headers = [
             'Content-Type' => 'application/json',
             'repeatability-request-id' => $messageId,
-            'operation-id' => $messageId,
+            'Operation-Id' => $messageId,
             'repeatability-first-sent' => $utcNow,
             'x-ms-date' => $utcNow,
             'x-ms-content-sha256' => $contentHash,
@@ -337,6 +339,22 @@ class AzureMailerApiTransport extends AbstractApiTransport
 
         //return signed headers to http client request
         return $headers;
+    }
+
+    /**
+     * Identify the long running operation.
+     * 
+     * @return array
+     */
+    private function generateMessageId(): string
+    {
+        $data = random_bytes(16);
+        assert(strlen($data) == 16);
+        $data[6] = chr(ord($data[6]) & 0x0f | 0x40);
+        $data[8] = chr(ord($data[8]) & 0x3f | 0x80);
+
+        // Output the 36 character UUID.
+        return vsprintf('%s%s-%s-%s-%s-%s%s%s', str_split(bin2hex($data), 4));
     }
     
     /**
