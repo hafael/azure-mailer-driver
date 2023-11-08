@@ -61,6 +61,7 @@ Add entry to [root-of-laravel]/config/mail.php:
             'access_key'            => env('AZURE_MAIL_KEY'),
             'api_version'           => env('AZURE_MAIL_API_VERSION', '2023-03-31'),
             'disable_user_tracking' => env('AZURE_MAIL_DISABLE_TRACKING', false),
+            'http'                  => []
         ],
     ]
 
