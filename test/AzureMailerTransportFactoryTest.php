@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
- namespace Hafael\Azure\Transport\Test;
+ namespace Hafael\Azure\Transport;
 
 use Hafael\Azure\Transport\AzureMailerApiTransport;
 use Hafael\Azure\Transport\AzureMailerTransportFactory;

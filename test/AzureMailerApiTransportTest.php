@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Hafael\Azure\Transport\Test;
+namespace Hafael\Azure\Transport;
 
 use Hafael\Azure\Transport\AzureMailerApiTransport;
 use PHPUnit\Framework\TestCase;
@@ -22,7 +22,7 @@ use Symfony\Component\Mime\Part\DataPart;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 use Symfony\Contracts\HttpClient\ResponseInterface;
 
-class AzureMailerTransportFactoryTest extends TestCase
+class AzureMailerApiTransportTest extends TestCase
 {
     /**
      * @dataProvider getTransportData
