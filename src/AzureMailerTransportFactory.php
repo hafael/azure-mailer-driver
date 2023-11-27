@@ -18,7 +18,7 @@ final class AzureMailerTransportFactory extends AbstractTransportFactory
         $engagementTracking = $this->getEngagementTracking($dsn);
 
         if ('azure+api' === $scheme || 'azure' === $scheme) {
-            return new AzureMailerApiTransport($endpoint, $key, $apiVersion, $engagementTracking);
+            return new AzureMailerApiTransport($endpoint, $key, $apiVersion, $engagementTracking, $this->client, $this->dispatcher, $this->logger);
         }
 
         throw new UnsupportedSchemeException($dsn, 'azure', $this->getSupportedSchemes());
