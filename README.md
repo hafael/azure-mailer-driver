@@ -15,6 +15,7 @@ This library provides developers with a simple set of features for sending Larav
 ## 💡 Requirements
 
 - PHP 8.1 or higher
+- [symfony/mailer](https://github.com/symfony/mailer)
 - [symfony/http-client](https://github.com/symfony/http-client)
 
 
