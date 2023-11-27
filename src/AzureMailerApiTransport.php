@@ -63,9 +63,11 @@ class AzureMailerApiTransport extends AbstractApiTransport
      * @param  string|null  $apiVersion
      * @param  bool  $engagementTracking
      * @param  HttpClientInterface  $client
+     * @param  EventDispatcherInterface  $dispatcher
+     * @param  LoggerInterface  $logger
      * @return void
      */
-    public function __construct(string $endpoint, string $key, string $apiVersion = null, bool $engagementTracking = true, HttpClientInterface $client = null, EventDispatcherInterface $dispatcher = null, LoggerInterface $logger = null)
+    public function __construct(string $endpoint, string $key, string $apiVersion = null, bool $engagementTracking = true, HttpClientInterface $client, EventDispatcherInterface $dispatcher = null, LoggerInterface $logger = null)
     {
         $this->client = $client;
         $this->endpoint = $endpoint;
