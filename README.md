@@ -1,22 +1,21 @@
-# Microsoft Azure (ACS) Bridge
+# Microsoft Azure Mailer for Laravel
 
-Provides Azure Communication Service integration for Symfony Mailer.
+✅ Simple implementation example of [Symfony Azure Mailer Bridge](https://github.com/symfony/azure-mailer) for Laravel Framework.
 
-✅ Including Laravel Service Provider boot script! (L9+)
+✅ Bootable scripts for Laravel 9+
 
 [![Latest Stable Version](http://poser.pugx.org/hafael/azure-mailer-driver/v)](https://packagist.org/packages/hafael/azure-mailer-driver)
 [![Latest Unstable Version](http://poser.pugx.org/hafael/azure-mailer-driver/v/unstable)](https://packagist.org/packages/hafael/azure-mailer-driver)
 [![Total Downloads](http://poser.pugx.org/hafael/azure-mailer-driver/downloads)](https://packagist.org/packages/hafael/azure-mailer-driver)
 [![License](http://poser.pugx.org/hafael/azure-mailer-driver/license)](https://packagist.org/packages/hafael/azure-mailer-driver)
 
-This library provides developers with a simple set of features for sending Laravel Framework emails through the Microsoft Azure ECS service.
+A use case of the [symfony/azure-mailer](https://github.com/symfony/azure-mailer) component using bootable scripts in the Laravel framework to send email messages.
 
 
 ## 💡 Requirements
 
-- PHP 8.1 or higher
-- [symfony/mailer](https://github.com/symfony/mailer)
-- [symfony/http-client](https://github.com/symfony/http-client)
+- PHP 8.2 or higher
+- [symfony/azure-mailer](https://github.com/symfony/azure-mailer)
 
 
 ## 🧩 Available resources
@@ -39,7 +38,7 @@ First time using Azure ECS? Create your [Azure account](https://azure.com), if y
 1. Download [Composer](https://getcomposer.org/doc/00-intro.md) if not already installed
 
 2. On your project directory run on the command line
-`composer require hafael/azure-mailer-driver symfony/http-client`
+`composer require hafael/azure-mailer-driver`
 
 3. Get your Azure CS Access Key and Service Endpoint.
 
@@ -58,7 +57,8 @@ Add entry to [root-of-laravel]/config/mail.php:
 
         'azure' => [
             'transport'             => 'azure',
-            'endpoint'              => env('AZURE_MAIL_ENDPOINT', 'https://{communicatonServiceName}.communication.azure.com'),
+            'resource_name'         => env('AZURE_MAIL_RESOURCE_NAME'),
+            'endpoint'              => env('AZURE_MAIL_ENDPOINT', 'https://my-acs-resource-name.communication.azure.com'),
             'access_key'            => env('AZURE_MAIL_KEY'),
             'api_version'           => env('AZURE_MAIL_API_VERSION', '2023-03-31'),
             'disable_user_tracking' => env('AZURE_MAIL_DISABLE_TRACKING', false),
@@ -78,8 +78,9 @@ Add entry to [root-of-laravel]/.env:
   MAIL_MAILER=azure
   
   # Azure Service entries
-  AZURE_MAIL_ENDPOINT="https://{communicatonServiceName}.communication.azure.com"
-  AZURE_MAIL_KEY="{base64accessToken}"
+  AZURE_MAIL_RESOURCE_NAME=my-acs-resource-name
+  # AZURE_MAIL_ENDPOINT= #optional
+  AZURE_MAIL_KEY=Base64AzureAccessToken
   # AZURE_MAIL_API_VERSION=2023-03-31 #optional
   # AZURE_MAIL_DISABLE_TRACKING=false #optional
   
@@ -96,6 +97,12 @@ Build powerful, cloud-based communication and customer engagement experiences by
 Visit our Dev Site for further information regarding:
  - Azure Communication Service Docs: [English](https://learn.microsoft.com/en-us/azure/communication-services/)
 
+ 
+## 💡 Last change
+
+** [0.3.0](https://github.com/hafael/azure-mailer-driver/blob/main/CHANGELOG.md)
+  * Change to Symfony Azure Bridge
+  * New entry in config and .env file: "resource_name" and "AZURE_MAIL_RESOURCE_NAME"
 
 ## 📜 License 
 

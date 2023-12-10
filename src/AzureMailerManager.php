@@ -1,8 +1,9 @@
 <?php
 
-namespace Hafael\Azure\Transport;
+namespace Hafael\Mailer\Azure;
 
 use Illuminate\Mail\MailManager;
+use Symfony\Component\Mailer\Bridge\Azure\Transport\AzureApiTransport;
 
 class AzureMailerManager extends MailManager
 {
@@ -10,12 +11,11 @@ class AzureMailerManager extends MailManager
     {
         $config = $this->app['config']->get('mail.mailers.azure', []);
         
-        return new AzureMailerApiTransport(
-            $config['endpoint'], 
-            $config['access_key'], 
-            $config['api_version'], 
+        return new AzureApiTransport(
+            $config['access_key'],
+            $config['resource_name'],
             boolval($config['disable_user_tracking']),
-            $this->getHttpClient([]),
+            $config['api_version'],
         );
     }
 }
