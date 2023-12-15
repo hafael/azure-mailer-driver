@@ -1,5 +1,5 @@
 {
-    "name": "hafael/azure-mailer-driver",
+    "name": "furiosojack/azure-mailer-driver",
     "description": "Provides Microsoft Azure ACS integration for Symfony Mailer. Azure Communication Services allows you to easily add real-time multimedia voice, video, and telephony-over-IP communications features to your applications. The Communication Services Email client libraries also allow you to add chat and EMAIL functionality to your communications solutions.",
     "homepage": "https://github.com/hafael/azure-mailer-driver",
     "type": "library",
