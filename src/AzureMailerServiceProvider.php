@@ -1,8 +1,9 @@
 <?php
 
-namespace Hafael\Azure\Transport;
+namespace Hafael\Mailer\Azure;
 
 use Illuminate\Mail\MailServiceProvider;
+use Symfony\Component\Mailer\Bridge\Azure\Transport\AzureTransportFactory;
 use Symfony\Component\Mailer\Transport\Dsn;
 
 class AzureMailerServiceProvider extends MailServiceProvider
@@ -27,13 +28,17 @@ class AzureMailerServiceProvider extends MailServiceProvider
         });
 
         $this->app->extend('azure', function () {
-            return (new AzureMailerTransportFactory)->create(
+            return (new AzureTransportFactory)->create(
                 new Dsn(
                     'azure+api',
-                    config('mail.mailers.azure.endpoint'),
+                    'default',
+                    config('mail.mailers.azure.resource_name'),
                     config('mail.mailers.azure.access_key'),
-                    config('mail.mailers.azure.api_version'),
-                    config('mail.mailers.azure.disable_user_tracking')
+                    null,
+                    [
+                        'api_version' => config('mail.mailers.azure.api_version'),
+                        'disable_tracking' => config('mail.mailers.azure.disable_user_tracking')
+                    ]
                 )
             );
         });
