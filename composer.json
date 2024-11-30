@@ -8,7 +8,11 @@
     "keywords": ["azure", "php", "api", "client", "sdk", "ecs", "azure communication service", "microsoft", "email", "driver", "swift", "mailer", "laravel", "symfony"],
     "require": {
         "php": ">=8.2",
-        "symfony/azure-mailer": "^7.2"
+        "symfony/azure-mailer": "^7.2",
+        "symfony/mailer": "^7.2"
+    },
+    "require-dev": {
+        "symfony/http-client": "^6.4|^7.0"
     },
     "authors": [
         {
