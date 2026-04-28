@@ -1,0 +1,19 @@
+vendor/
+composer.lock
+
+# IDE
+.idea/
+.vscode/
+*.iml
+
+# Claude
+.claude/
+
+# Testing
+.phpunit.result.cache
+.phpunit.cache/
+coverage/
+
+# OS
+.DS_Store
+Thumbs.db

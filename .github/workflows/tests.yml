@@ -1,0 +1,30 @@
+name: Tests
+
+on: [push, pull_request]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        php: ['8.2', '8.5']
+        dependency-version: ['--prefer-lowest', '--prefer-stable']
+
+    name: PHP ${{ matrix.php }} — ${{ matrix.dependency-version }}
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v6
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php }}
+          coverage: none
+
+      - name: Install dependencies
+        run: composer update ${{ matrix.dependency-version }} --no-interaction --no-progress
+
+      - name: Run tests
+        run: ./vendor/bin/phpunit

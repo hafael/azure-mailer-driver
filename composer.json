@@ -4,15 +4,18 @@
     "homepage": "https://github.com/hafael/azure-mailer-driver",
     "type": "library",
     "license": "MIT",
-    "minimum-stability": "dev",
-    "keywords": ["azure", "php", "api", "client", "sdk", "ecs", "azure communication service", "microsoft", "email", "driver", "swift", "mailer", "laravel", "symfony"],
+    "keywords": ["azure", "php", "api", "client", "sdk", "ecs", "acs", "azure communication services", "microsoft", "email", "driver", "swift", "mailer", "laravel", "symfony"],
     "require": {
         "php": ">=8.2",
-        "symfony/azure-mailer": "^7.2",
-        "symfony/mailer": "^7.2"
+        "illuminate/mail": "^12.0|^13.0",
+        "symfony/azure-mailer": "^7.2|^8.0"
     },
     "require-dev": {
-        "symfony/http-client": "^6.4|^7.0"
+        "illuminate/config": "^12.0|^13.0",
+        "illuminate/container": "^12.0|^13.0",
+        "phpunit/phpunit": "^11.0",
+        "symfony/http-client": "^7.2|^8.0",
+        "laravel/pint": "^1.29"
     },
     "authors": [
         {
@@ -22,11 +25,20 @@
     ],
     "autoload": {
         "psr-4": {
-            "Hafael\\Mailer\\Azure\\": ["src", "test"]
+            "Hafael\\Mailer\\Azure\\": "src/"
         }
     },
+    "autoload-dev": {
+        "psr-4": {
+            "Hafael\\Mailer\\Azure\\Tests\\": "tests/"
+        }
+    },
+    "suggest": {
+        "symfony/http-client": "Required to enable support for the Symfony API mail transports (^7.2 || ^8.0)."
+    },
     "scripts": {
-        "test": "./vendor/bin/phpunit"
+        "test": "./vendor/bin/phpunit",
+        "pint": "./vendor/bin/pint"
     },
     "extra": {
         "laravel": {

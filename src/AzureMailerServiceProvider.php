@@ -2,45 +2,60 @@
 
 namespace Hafael\Mailer\Azure;
 
-use Illuminate\Mail\MailServiceProvider;
-use Symfony\Component\Mailer\Bridge\Azure\Transport\AzureTransportFactory;
-use Symfony\Component\Mailer\Transport\Dsn;
+use Illuminate\Support\ServiceProvider;
 
-class AzureMailerServiceProvider extends MailServiceProvider
+class AzureMailerServiceProvider extends ServiceProvider
 {
-    /**
-     * Register the Illuminate mailer instance.
-     *
-     * @return void
-     */
-    protected function registerIlluminateMailer()
+    public function boot(): void
     {
-        $this->app->singleton('mail.manager', function($app) {
-            return new AzureMailerManager($app);
-        });
+        $manager = $this->app->make('mail.manager');
 
-        $this->app->bind('mailer', function ($app) {
-            return $app->make('mail.manager')->mailer();
-        });
+        $manager->extend('acs', fn (array $config) => $this->makeTransport($config));
 
-        $this->app->extend('azure', function ($app) {
-            return $app->make('mail.manager')->mailer();
-        });
+        // Legacy 'azure' transport — registers a lazy callback that maps old config keys to the
+        // new format. The transport is only instantiated if legacy 'transport: azure' is actually used.
+        $manager->extend('azure', fn (array $config) => $this->makeTransport($this->normalizeLegacyConfig($config)));
+    }
 
-        $this->app->extend('azure', function () {
-            return (new AzureTransportFactory)->create(
-                new Dsn(
-                    'azure+api',
-                    'default',
-                    config('mail.mailers.azure.resource_name'),
-                    config('mail.mailers.azure.access_key'),
-                    null,
-                    [
-                        'api_version' => config('mail.mailers.azure.api_version'),
-                        'disable_tracking' => config('mail.mailers.azure.disable_user_tracking')
-                    ]
-                )
-            );
-        });
+    private function makeTransport(array $config): AzureTransport
+    {
+        return new AzureTransport(
+            $config['key'] ?? $this->app['config']->get('services.acs.key'),
+            $config['endpoint'] ?? $this->app['config']->get('services.acs.endpoint'),
+            $config['disable_tracking'] ?? false,
+            $config['api_version'] ?? '2023-03-31',
+        );
+    }
+
+    /**
+     * Maps old 'azure' transport config keys to the current format:
+     *   access_key       → key
+     *   resource_name    → endpoint (only plain short names supported, e.g. "my-resource")
+     *   disable_user_tracking → disable_tracking
+     */
+    private function normalizeLegacyConfig(array $config): array
+    {
+        if (! isset($config['key']) && isset($config['access_key'])) {
+            $config['key'] = $config['access_key'];
+        }
+
+        if (! isset($config['endpoint']) && isset($config['resource_name'])) {
+            $name = $config['resource_name'];
+
+            if (str_contains($name, '.') || str_contains($name, '/') || str_contains($name, ':')) {
+                throw new \InvalidArgumentException(
+                    "Legacy config 'mailers.azure' only supports plain 'resource_name' (e.g. \"my-resource\"). ".
+                    "Switch your 'mailers.azure.transport' to 'acs' and move your 'endpoint' and 'key' to 'services.acs' instead."
+                );
+            }
+
+            $config['endpoint'] = "https://{$name}.communication.azure.com";
+        }
+
+        if (! isset($config['disable_tracking']) && isset($config['disable_user_tracking'])) {
+            $config['disable_tracking'] = (bool) $config['disable_user_tracking'];
+        }
+
+        return $config;
     }
 }
